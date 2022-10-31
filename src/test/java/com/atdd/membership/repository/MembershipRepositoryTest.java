@@ -1,11 +1,14 @@
 package com.atdd.membership.repository;
 
 import com.atdd.membership.domain.Membership;
-import com.atdd.membership.domain.enumType.MembershipType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.util.List;
+
+import static com.atdd.membership.domain.enumType.MembershipType.KAKAO;
+import static com.atdd.membership.domain.enumType.MembershipType.NAVER;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /*
@@ -47,7 +50,7 @@ public class MembershipRepositoryTest {
         // given
         final Membership membership = Membership.builder()
                 .userId("사용자 아이디")
-                .membershipType(MembershipType.NAVER)
+                .membershipType(NAVER)
                 .point(10000)
                 .build();
 
@@ -57,7 +60,7 @@ public class MembershipRepositoryTest {
         // then
         assertThat(result.getId()).isNotNull();
         assertThat(result.getUserId()).isEqualTo("사용자 아이디");
-        assertThat(result.getMembershipType()).isEqualTo(MembershipType.NAVER);
+        assertThat(result.getMembershipType()).isEqualTo(NAVER);
         assertThat(result.getPoint()).isEqualTo(10000);
     }
 
@@ -72,19 +75,55 @@ public class MembershipRepositoryTest {
         //given
         final Membership membership = Membership.builder()
                 .userId("사용자 아이디")
-                .membershipType(MembershipType.NAVER)
+                .membershipType(NAVER)
                 .point(10000)
                 .build();
 
         // when
         membershipRepository.save(membership);
-        final Membership findResult = membershipRepository.findByUserIdAndMembershipType("사용자 아이디", MembershipType.NAVER);
+        final Membership findResult = membershipRepository.findByUserIdAndMembershipType("사용자 아이디", NAVER);
 
         // then
         assertThat(findResult).isNotNull();
         assertThat(findResult.getId()).isNotNull();
         assertThat(findResult.getUserId()).isEqualTo("사용자 아이디");
-        assertThat(findResult.getMembershipType()).isEqualTo(MembershipType.NAVER);
+        assertThat(findResult.getMembershipType()).isEqualTo(NAVER);
         assertThat(findResult.getPoint()).isEqualTo(10000);
+    }
+
+    @Test
+    public void 멤버십조회_사이즈가0() {
+        // given
+
+        // when
+        final List<Membership> result =  membershipRepository.findAllByUserId("userId");
+
+        // then
+        assertThat(result.size()).isEqualTo(0);
+    }
+
+    @Test
+    public void 멤버십조회_사이즈가2() throws Exception {
+        // given
+        final Membership naverMembership = Membership.builder()
+                .userId("userId")
+                .membershipType(NAVER)
+                .point(10000)
+                .build();
+
+        final Membership kakaoMembership = Membership.builder()
+                .userId("userId")
+                .membershipType(KAKAO)
+                .point(10000)
+                .build();
+
+        membershipRepository.save(naverMembership);
+        membershipRepository.save(kakaoMembership);
+
+        // when
+        final List<Membership> result = membershipRepository.findAllByUserId("userId");
+
+        // then
+        assertThat(result.size()).isEqualTo(2);
     }
 }
