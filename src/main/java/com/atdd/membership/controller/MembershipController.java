@@ -1,17 +1,16 @@
 package com.atdd.membership.controller;
 
-import com.atdd.membership.domain.MembershipRequest;
 import com.atdd.membership.domain.MembershipAddResponse;
+import com.atdd.membership.domain.MembershipDetailResponse;
+import com.atdd.membership.domain.MembershipRequest;
 import com.atdd.membership.service.MembershipService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 import static com.atdd.membership.domain.MembershipConstants.USER_ID_HEADER;
 
@@ -30,5 +29,10 @@ public class MembershipController {
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(membershipResponse);
+    }
+
+    @GetMapping("/api/v1/memberships")
+    public ResponseEntity<List<MembershipDetailResponse>> addMembership(@RequestHeader(USER_ID_HEADER) final String userId) {
+        return ResponseEntity.ok(membershipService.getMembershipList(userId));
     }
 }
