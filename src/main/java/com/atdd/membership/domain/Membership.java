@@ -1,8 +1,7 @@
 package com.atdd.membership.domain;
 
 import com.atdd.membership.domain.enumType.MembershipType;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -11,11 +10,12 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
+@NoArgsConstructor
 @Entity
 public class Membership {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     @Enumerated(EnumType.STRING)
@@ -37,10 +37,9 @@ public class Membership {
     @Column(length = 20)
     private LocalDateTime updatedAt;
 
-    public Membership() {}
-
     @Builder
-    public Membership(MembershipType membershipType, String userId, Integer point) {
+    public Membership(Long id, MembershipType membershipType, String userId, Integer point) {
+        this.id             = id;
         this.membershipType = membershipType;
         this.userId         = userId;
         this.point          = point;
