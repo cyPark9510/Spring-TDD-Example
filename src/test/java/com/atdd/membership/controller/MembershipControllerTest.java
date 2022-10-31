@@ -2,7 +2,7 @@ package com.atdd.membership.controller;
 
 import com.atdd.membership.config.GlobalExceptionHandler;
 import com.atdd.membership.domain.MembershipRequest;
-import com.atdd.membership.domain.MembershipResponse;
+import com.atdd.membership.domain.MembershipAddResponse;
 import com.atdd.membership.domain.enumType.MembershipErrorResult;
 import com.atdd.membership.domain.enumType.MembershipType;
 import com.atdd.membership.exception.MembershipException;
@@ -181,7 +181,7 @@ public class MembershipControllerTest {
     public void 멤버십등록성공() throws Exception {
         // given
         final String url = "/api/v1/memberships";
-        final MembershipResponse membershipResponse = MembershipResponse.builder()
+        final MembershipAddResponse membershipResponse = MembershipAddResponse.builder()
                 .id(-1L)
                 .membershipType(NAVER)
                 .build();
@@ -199,9 +199,9 @@ public class MembershipControllerTest {
         // then
         resultActions.andExpect(status().isCreated());
 
-        final MembershipResponse response = gson.fromJson(resultActions.andReturn()
+        final MembershipAddResponse response = gson.fromJson(resultActions.andReturn()
                 .getResponse()
-                .getContentAsString(StandardCharsets.UTF_8), MembershipResponse.class);
+                .getContentAsString(StandardCharsets.UTF_8), MembershipAddResponse.class);
 
         assertThat(response.getMembershipType()).isEqualTo(NAVER);
         assertThat(response.getId()).isNotNull();
