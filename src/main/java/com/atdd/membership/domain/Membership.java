@@ -38,7 +38,7 @@ public class Membership {
     private LocalDateTime updatedAt;
 
     @Builder
-    public Membership(Long id, MembershipType membershipType, String userId, Integer point) {
+    public Membership(final Long id, final MembershipType membershipType, final String userId, final Integer point) {
         this.id             = id;
         this.membershipType = membershipType;
         this.userId         = userId;
