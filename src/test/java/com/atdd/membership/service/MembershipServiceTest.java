@@ -1,8 +1,8 @@
 package com.atdd.membership.service;
 
 import com.atdd.membership.domain.Membership;
-import com.atdd.membership.domain.MembershipAddResponse;
-import com.atdd.membership.domain.MembershipDetailResponse;
+import com.atdd.membership.dto.MembershipAddResponse;
+import com.atdd.membership.dto.MembershipDetailResponse;
 import com.atdd.membership.domain.enumType.MembershipErrorResult;
 import com.atdd.membership.domain.enumType.MembershipType;
 import com.atdd.membership.exception.MembershipException;

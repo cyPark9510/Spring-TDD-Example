@@ -1,8 +1,8 @@
 package com.atdd.membership.controller;
 
-import com.atdd.membership.domain.MembershipAddResponse;
-import com.atdd.membership.domain.MembershipDetailResponse;
-import com.atdd.membership.domain.MembershipRequest;
+import com.atdd.membership.dto.MembershipAddResponse;
+import com.atdd.membership.dto.MembershipDetailResponse;
+import com.atdd.membership.dto.MembershipRequest;
 import com.atdd.membership.service.MembershipService;
 import com.atdd.membership.validation.ValidationGroups;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.atdd.membership.domain.MembershipConstants.USER_ID_HEADER;
+import static com.atdd.membership.constants.MembershipConstants.USER_ID_HEADER;
 
 @RestController
 @RequiredArgsConstructor

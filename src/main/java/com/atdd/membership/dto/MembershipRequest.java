@@ -1,4 +1,4 @@
-package com.atdd.membership.domain;
+package com.atdd.membership.dto;
 
 import com.atdd.membership.domain.enumType.MembershipType;
 import com.atdd.membership.validation.ValidationGroups.MembershipAccumulateMarker;

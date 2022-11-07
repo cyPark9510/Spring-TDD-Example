@@ -1,4 +1,4 @@
-package com.atdd.membership.domain;
+package com.atdd.membership.constants;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

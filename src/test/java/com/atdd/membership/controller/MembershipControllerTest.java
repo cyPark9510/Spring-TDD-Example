@@ -1,9 +1,9 @@
 package com.atdd.membership.controller;
 
-import com.atdd.membership.config.GlobalExceptionHandler;
-import com.atdd.membership.domain.MembershipDetailResponse;
-import com.atdd.membership.domain.MembershipRequest;
-import com.atdd.membership.domain.MembershipAddResponse;
+import com.atdd.membership.common.GlobalExceptionHandler;
+import com.atdd.membership.dto.MembershipDetailResponse;
+import com.atdd.membership.dto.MembershipRequest;
+import com.atdd.membership.dto.MembershipAddResponse;
 import com.atdd.membership.domain.enumType.MembershipErrorResult;
 import com.atdd.membership.domain.enumType.MembershipType;
 import com.atdd.membership.exception.MembershipException;
@@ -28,7 +28,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-import static com.atdd.membership.domain.MembershipConstants.USER_ID_HEADER;
+import static com.atdd.membership.constants.MembershipConstants.USER_ID_HEADER;
 import static com.atdd.membership.domain.enumType.MembershipType.NAVER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;

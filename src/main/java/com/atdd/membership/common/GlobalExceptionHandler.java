@@ -1,4 +1,4 @@
-package com.atdd.membership.config;
+package com.atdd.membership.common;
 
 import com.atdd.membership.domain.enumType.MembershipErrorResult;
 import com.atdd.membership.exception.MembershipException;
