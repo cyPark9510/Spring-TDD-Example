@@ -35,6 +35,9 @@ public class MembershipServiceTest {
     @Mock
     private MembershipRepository membershipRepository;
 
+    @Mock
+    private RatePointService ratePointService;
+
     private final String userId = "사용자 아이디";
     private final MembershipType membershipType = NAVER;
     private final Integer point = 10000;
@@ -178,6 +181,43 @@ public class MembershipServiceTest {
 
         // when
         target.removeMembership(membershipId, userId);
+
+        // then
+    }
+
+    @Test
+    public void 멤버십적립실패_존재하지않음() {
+        // given
+        doReturn(Optional.empty()).when(membershipRepository).findById(membershipId);
+
+        // when
+        final MembershipException result = assertThrows(MembershipException.class, () -> target.accumulateMembershipPoint(membershipId, userId, 10000));
+
+        // then
+        assertThat(result.getErrorResult()).isEqualTo(MembershipErrorResult.MEMBERSHIP_NOT_FOUND);
+    }
+
+    @Test
+    public void 멤버십적립실패_본인아님() {
+        // given
+        final Membership membership = membership();
+        doReturn(Optional.of(membership)).when(membershipRepository).findById(membershipId);
+
+        // when
+        final MembershipException result = assertThrows(MembershipException.class, () -> target.accumulateMembershipPoint(membershipId, "notowner", 10000));
+
+        // then
+        assertThat(result.getErrorResult()).isEqualTo(MembershipErrorResult.NOT_MEMBERSHIP_OWNER);
+    }
+
+    @Test
+    public void 멤버십적립성공() {
+        // given
+        final Membership membership = membership();
+        doReturn(Optional.of(membership)).when(membershipRepository).findById(membershipId);
+
+        // when
+        target.accumulateMembershipPoint(membershipId, userId, 10000);
 
         // then
     }
