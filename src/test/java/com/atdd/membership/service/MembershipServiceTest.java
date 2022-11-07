@@ -144,4 +144,41 @@ public class MembershipServiceTest {
         assertThat(result.getMembershipType()).isEqualTo(NAVER);
         assertThat(result.getPoint()).isEqualTo(point);
     }
+
+    @Test
+    public void 멤버십삭제실패_존재하지않음() {
+        // given
+        doReturn(Optional.empty()).when(membershipRepository).findById(membershipId);
+
+        // when
+        MembershipException result = assertThrows(MembershipException.class, () -> target.removeMembership(membershipId, userId));
+
+        // then
+        assertThat(result.getErrorResult()).isEqualTo(MembershipErrorResult.MEMBERSHIP_NOT_FOUND);
+    }
+
+    @Test
+    public void 멤버십삭제실패_본인아님() {
+        // given
+        final Membership membership = membership();
+        doReturn(Optional.of(membership)).when(membershipRepository).findById(membershipId);
+
+        // when
+        MembershipException result = assertThrows(MembershipException.class, () -> target.removeMembership(membershipId, "notowner"));
+
+        // then
+        assertThat(result.getErrorResult()).isEqualTo(MembershipErrorResult.NOT_MEMBERSHIP_OWNER);
+    }
+
+    @Test
+    public void 멤버십삭제성공() {
+        // given
+        final Membership membership = membership();
+        doReturn(Optional.of(membership)).when(membershipRepository).findById(membershipId);
+
+        // when
+        target.removeMembership(membershipId, userId);
+
+        // then
+    }
 }

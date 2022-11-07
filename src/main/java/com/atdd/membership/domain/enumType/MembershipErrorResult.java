@@ -11,6 +11,7 @@ public enum MembershipErrorResult {
     DUPLICATED_MEMBERSHIP_REGISTER(HttpStatus.BAD_REQUEST, "Duplicated Membership Register Request"),
     UNKNOWN_EXCEPION(HttpStatus.INTERNAL_SERVER_ERROR, "Unknown Exception"),
     MEMBERSHIP_NOT_FOUND(HttpStatus.NOT_FOUND, "Membership Not found"),
+    NOT_MEMBERSHIP_OWNER(HttpStatus.BAD_REQUEST, "Not a membership owner"),
     ;
 
     private final HttpStatus httpStatus;
