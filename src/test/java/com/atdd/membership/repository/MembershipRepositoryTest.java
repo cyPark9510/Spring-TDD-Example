@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.atdd.membership.domain.enumType.MembershipType.KAKAO;
 import static com.atdd.membership.domain.enumType.MembershipType.NAVER;
@@ -125,5 +126,24 @@ public class MembershipRepositoryTest {
 
         // then
         assertThat(result.size()).isEqualTo(2);
+    }
+
+    @Test
+    public void 멤버식추가후삭제() {
+        // given
+        final Membership naverMembership = Membership.builder()
+                .userId("userId")
+                .membershipType(NAVER)
+                .point(10000)
+                .build();
+
+        membershipRepository.save(naverMembership);
+
+        // when
+        membershipRepository.deleteById(naverMembership.getId());
+
+        // then
+        Optional<Membership> deleteMembership = membershipRepository.findById(naverMembership.getId());
+        assertThat(deleteMembership.isPresent()).isFalse();
     }
 }
