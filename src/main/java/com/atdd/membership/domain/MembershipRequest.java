@@ -1,6 +1,8 @@
 package com.atdd.membership.domain;
 
 import com.atdd.membership.domain.enumType.MembershipType;
+import com.atdd.membership.validation.ValidationGroups.MembershipAccumulateMarker;
+import com.atdd.membership.validation.ValidationGroups.MembershipAddMarker;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,10 +17,10 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor(force = true)
 public class MembershipRequest {
 
-    @NotNull
-    @Min(0)
+    @NotNull(groups = {MembershipAddMarker.class, MembershipAccumulateMarker.class})
+    @Min(value = 0, groups = {MembershipAddMarker.class, MembershipAccumulateMarker.class})
     private final Integer point;
 
-    @NotNull
+    @NotNull(groups = {MembershipAddMarker.class})
     private final MembershipType membershipType;
 }

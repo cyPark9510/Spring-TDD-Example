@@ -328,4 +328,60 @@ public class MembershipControllerTest {
         // then
         resultActions.andExpect(status().isOk());
     }
+
+    @Test
+    public void 멤버십적립실패_사용자식별값이헤더에없음() throws Exception {
+        // given
+        final String url = "/api/v1/memberships/-1/accumulate";
+
+        // when
+        final ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders.post(url)
+                        .contentType(gson.toJson(membershipRequest(10000)))
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        // then
+        resultActions.andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void 멤버십적립실패_포인트가음수() throws Exception {
+        // given
+        final String url = "/api/v1/memberships/-1/accumulate";
+
+        // when
+        final ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders.post(url)
+                        .header(USER_ID_HEADER, "userId")
+                        .content(gson.toJson(membershipRequest(-1, NAVER)))
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        // then
+        resultActions.andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void 멤버십적립성공() throws Exception {
+        // given
+        final String url = "/api/v1/memberships/-1/accumulate";
+
+        // when
+        final ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders.post(url)
+                        .header(USER_ID_HEADER, "userId")
+                        .content(gson.toJson(membershipRequest(10000, NAVER)))
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        // then
+        resultActions.andExpect(status().isOk());
+    }
+
+    private MembershipRequest membershipRequest(final int point) {
+        return MembershipRequest.builder()
+                .point(point)
+                .build();
+    }
 }
